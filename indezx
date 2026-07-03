@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Mesa de Trabajo ✦</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#182026;--ink2:#34424b;--dim:#75808a;
+  --bg:#f6f4ef;--bg2:#ece7dc;--bg3:#ded7c8;--w:#ffffff;
+  --blue:#346b80;--blue-d:#244c5d;--blue-l:#e6f1f4;--blue-m:#91bdc8;
+  --olive:#6d7f46;--olive-d:#4e5e31;--olive-l:#edf2e2;--olive-m:#b8c991;
+  --clay:#b56b4d;--clay-d:#8d4a30;--clay-l:#f5e8e0;--clay-m:#d59b83;
+  --gold:#b58a35;--gold-d:#7d5c1e;--gold-l:#f6edd8;--gold-m:#d8bd78;
+  --rose:#a85c71;--rose-d:#7d3f53;--rose-l:#f4e6ea;
+  --bdr:#d8cec0;--bdr2:#c6b9a8;--r:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:var(--bg3);font-family:'DM Sans',sans-serif;color:var(--ink);font-size:14px;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:300}
+button,input,textarea,select{font-family:'DM Sans',sans-serif}
+button{cursor:pointer}
+.app{height:100dvh;display:grid;grid-template-rows:54px 1fr;overflow:hidden}
+.topbar{background:var(--ink);color:white;display:flex;align-items:center;gap:12px;padding:0 18px;border-bottom:1px solid rgba(255,255,255,.08);z-index:10}
+.brand{display:flex;align-items:center;gap:8px;font-family:'Fraunces',serif;font-size:17px;color:#fff8ee;white-space:nowrap}
+.brand .star{color:var(--gold-m);font-size:18px}.brand small{font-family:'DM Sans',sans-serif;font-size:11px;color:rgba(255,255,255,.35);margin-left:2px}.top-actions{margin-left:auto;display:flex;gap:8px;align-items:center}.search{width:260px;max-width:32vw;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);border-radius:999px;padding:8px 13px;color:white;font-size:12px}.search::placeholder{color:rgba(255,255,255,.35)}
+.userchip{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.08);border-radius:999px;padding:4px 12px 4px 4px;font-size:12px;color:rgba(255,255,255,.7)}.avatar{width:26px;height:26px;border-radius:50%;background:var(--blue-l);color:var(--blue-d);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px}
+.body{display:grid;grid-template-columns:230px 1fr;height:100%;overflow:hidden}.sidebar{background:var(--bg2);border-right:1px solid var(--bdr);display:flex;flex-direction:column;overflow:hidden}.side-head{padding:18px 16px;border-bottom:1px solid var(--bdr)}.side-ey{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);font-weight:700}.side-title{font-family:'Fraunces',serif;font-size:25px;line-height:1;color:var(--blue-d);margin:4px 0}.side-sub{font-size:11px;color:var(--dim);line-height:1.5}.nav{padding:9px;overflow-y:auto;flex:1}.navitem{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;color:var(--ink2);font-size:13px;margin-bottom:2px;border:1px solid transparent;transition:.12s}.navitem:hover{background:white;border-color:var(--bdr)}.navitem.active{background:var(--blue-l);border-color:var(--blue-m);color:var(--blue-d);font-weight:600}.navitem span{width:20px;text-align:center;font-size:16px}.badge{margin-left:auto;background:var(--clay);color:white;font-size:10px;padding:1px 6px;border-radius:999px}.side-foot{padding:10px;border-top:1px solid var(--bdr)}.pulse{background:white;border:1px solid var(--bdr);border-radius:12px;padding:11px}.pulse-title{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);font-weight:700}.pulse-main{display:flex;align-items:end;justify-content:space-between;margin-top:5px}.pulse-n{font-family:'Fraunces',serif;font-size:29px;color:var(--blue-d);line-height:1}.pulse-l{font-size:11px;color:var(--dim)}.bar{height:4px;background:var(--bg3);border-radius:999px;overflow:hidden;margin-top:8px}.barf{height:100%;background:var(--blue);border-radius:999px;width:0%}
+.main{background:var(--bg);overflow-y:auto}.sec{display:none;padding:24px 30px;max-width:1180px}.sec.active{display:block}.sec-hd{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px}.sec-hd h2{font-size:27px;color:var(--ink);margin-bottom:3px}.sec-hd p{font-size:13px;color:var(--dim);line-height:1.5}.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:none;border-radius:10px;padding:8px 13px;font-size:13px;font-weight:600;transition:.15s}.btn-primary{background:var(--blue);color:white}.btn-primary:hover{background:var(--blue-d)}.btn-clay{background:var(--clay);color:white}.btn-outline{background:white;border:1px solid var(--bdr);color:var(--ink2)}.btn-outline:hover{border-color:var(--bdr2)}.btn-ghost{background:transparent;color:var(--dim);padding:5px 8px}.btn-sm{padding:5px 9px;font-size:11px}
+.grid{display:grid;gap:12px}.grid2{grid-template-columns:1fr 1fr}.grid3{grid-template-columns:repeat(3,1fr)}.grid4{grid-template-columns:repeat(4,1fr)}.card{background:white;border:1px solid var(--bdr);border-radius:14px;padding:15px 17px}.card-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}.hero{background:var(--ink);border-radius:18px;padding:24px 28px;margin-bottom:16px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;position:relative;overflow:hidden}.hero:before{content:'';position:absolute;width:340px;height:340px;border-radius:50%;background:var(--blue);opacity:.09;top:-120px;right:-80px}.hero:after{content:'';position:absolute;width:220px;height:220px;border-radius:50%;background:var(--gold);opacity:.07;bottom:-90px;left:35%}.hero>*{position:relative}.ey{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold-m);font-weight:700;margin-bottom:7px}.hero h1{font-size:32px;color:#fff8ee;line-height:1.1;margin-bottom:5px}.hero p{font-size:13px;color:rgba(255,255,255,.46);line-height:1.6;max-width:620px}.datebox{text-align:right}.datebox .day{font-family:'Fraunces',serif;font-size:48px;color:var(--gold-m);line-height:1}.datebox .label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.35)}
+.stat{background:var(--bg);border-radius:12px;padding:12px 14px}.stat .n{font-family:'Fraunces',serif;font-size:28px;color:var(--ink);line-height:1}.stat .l{font-size:11px;color:var(--dim);margin-top:3px}.mini-list{display:flex;flex-direction:column;gap:7px}.mini-item{display:flex;gap:8px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--bg2)}.mini-item:last-child{border-bottom:none}.dot{width:8px;height:8px;border-radius:50%;margin-top:6px;flex-shrink:0}.dot.alta{background:var(--clay)}.dot.media{background:var(--gold)}.dot.baja{background:var(--olive)}.mini-title{font-size:12px;font-weight:700;color:var(--ink)}.mini-meta{font-size:11px;color:var(--dim);margin-top:1px}.tag{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:2px 7px;font-size:10px;font-weight:700}.tag-blue{background:var(--blue-l);color:var(--blue-d)}.tag-olive{background:var(--olive-l);color:var(--olive-d)}.tag-clay{background:var(--clay-l);color:var(--clay-d)}.tag-gold{background:var(--gold-l);color:var(--gold-d)}.tag-rose{background:var(--rose-l);color:var(--rose-d)}
+.filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}.pill{padding:5px 11px;background:white;border:1px solid var(--bdr);border-radius:999px;font-size:11px;color:var(--dim);font-weight:700}.pill.active{background:var(--blue-l);border-color:var(--blue-m);color:var(--blue-d)}.project-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}.project-card{background:white;border:1px solid var(--bdr);border-radius:15px;padding:16px;transition:.15s}.project-card:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.06)}.project-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.project-name{font-size:17px;font-family:'Fraunces',serif;color:var(--ink);line-height:1.15}.project-desc{font-size:12px;color:var(--dim);line-height:1.6;margin:8px 0 12px}.progress-line{height:5px;background:var(--bg2);border-radius:999px;overflow:hidden}.progress-line div{height:100%;background:var(--blue);border-radius:999px}.project-foot{display:flex;justify-content:space-between;align-items:center;margin-top:9px;font-size:11px;color:var(--dim)}
+.task{background:white;border:1px solid var(--bdr);border-left:4px solid transparent;border-radius:13px;padding:13px 14px;margin-bottom:8px;display:flex;gap:10px}.task.alta{border-left-color:var(--clay)}.task.media{border-left-color:var(--gold)}.task.baja{border-left-color:var(--olive)}.check{width:20px;height:20px;border-radius:50%;border:2px solid var(--bdr);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}.check.done{background:var(--olive);border-color:var(--olive);color:white}.check.done:after{content:'✓';font-size:11px}.task-body{flex:1;min-width:0}.task-title{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:3px}.task-title.done{text-decoration:line-through;color:var(--dim)}.task-desc{font-size:12px;color:var(--dim);line-height:1.5;margin-bottom:7px}.task-meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.task-actions{display:flex;gap:4px;flex-shrink:0}.week{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.daycol{background:white;border:1px solid var(--bdr);border-radius:14px;min-height:320px;overflow:hidden}.dayhd{background:var(--bg2);border-bottom:1px solid var(--bdr);padding:10px 12px}.dayname{font-weight:800;color:var(--ink2);font-size:13px}.daydate{font-size:11px;color:var(--dim);margin-top:1px}.daybody{padding:10px}.daytask{background:var(--bg);border:1px solid var(--bdr);border-radius:10px;padding:9px;margin-bottom:7px}.daytask b{font-size:12px}.daytask p{font-size:11px;color:var(--dim);line-height:1.4;margin-top:2px}.meeting{background:white;border:1px solid var(--bdr);border-radius:13px;padding:14px;margin-bottom:9px}.meeting-head{display:flex;justify-content:space-between;gap:12px;margin-bottom:7px}.meeting-title{font-weight:800;color:var(--ink);font-size:14px}.meeting-meta{font-size:11px;color:var(--dim)}.meeting p{font-size:12px;color:var(--ink2);line-height:1.6}.note{background:white;border:1px solid var(--bdr);border-radius:13px;padding:14px 16px;margin-bottom:9px}.note-head{display:flex;justify-content:space-between;gap:12px;margin-bottom:7px}.note-kind{font-weight:800;font-size:11px;color:var(--blue-d)}.note-date{font-size:10px;color:var(--dim)}.note p{font-size:13px;color:var(--ink2);line-height:1.7}.report-box{background:white;border:1px solid var(--bdr);border-radius:15px;padding:18px}.report-output{white-space:pre-wrap;background:var(--bg);border:1px solid var(--bdr);border-radius:12px;padding:14px;font-size:13px;line-height:1.7;color:var(--ink2);min-height:260px}.formrow{margin-bottom:12px}.formrow label{display:block;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);font-weight:800;margin-bottom:5px}.formrow input,.formrow textarea,.formrow select{width:100%;border:1px solid var(--bdr);background:var(--bg);border-radius:10px;padding:9px 11px;font-size:13px;color:var(--ink)}.formrow textarea{min-height:80px;resize:vertical;line-height:1.6}.formrow input:focus,.formrow textarea:focus,.formrow select:focus{outline:none;border-color:var(--blue-m);background:white}.modal-bg{position:fixed;inset:0;background:rgba(24,32,38,.52);display:none;align-items:center;justify-content:center;padding:18px;z-index:100;backdrop-filter:blur(3px)}.modal-bg.on{display:flex}.modal{background:white;border-radius:16px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;padding:22px;box-shadow:0 20px 70px rgba(0,0,0,.2)}.modal h3{font-size:21px;margin-bottom:14px}.actions{display:flex;justify-content:flex-end;gap:8px;margin-top:15px}.empty{text-align:center;padding:34px 14px;color:var(--dim)}.empty .ico{font-size:34px;opacity:.3;margin-bottom:8px}.access-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-bottom:1px solid var(--bg2)}.access-row:last-child{border-bottom:none}.access-name{font-weight:800}.access-mail{font-size:11px;color:var(--dim);margin-top:1px}.toast{position:fixed;right:18px;bottom:18px;background:var(--ink);color:white;border-radius:11px;padding:10px 14px;font-size:13px;z-index:200;transform:translateY(50px);opacity:0;transition:.25s}.toast.show{transform:translateY(0);opacity:1}
+@media(max-width:900px){.body{grid-template-columns:1fr}.sidebar{display:none}.top-actions .search{display:none}.sec{padding:16px}.grid2,.grid3,.grid4,.week{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.datebox{text-align:left}.project-grid{grid-template-columns:1fr}.brand small{display:none}}
+
+/* CASOS ESPECÍFICOS */
+.case-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.case-card{background:white;border:1px solid var(--bdr);border-radius:14px;padding:15px 16px;transition:.15s;border-left:4px solid var(--blue)}
+.case-card:hover{border-color:var(--bdr2);transform:translateY(-1px)}
+.case-card.alerta-alta{border-left-color:var(--clay)}
+.case-card.alerta-media{border-left-color:var(--gold)}
+.case-card.alerta-baja{border-left-color:var(--olive)}
+.case-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:7px}
+.case-name{font-size:15px;font-weight:700;color:var(--ink);line-height:1.3}
+.case-type{font-size:11px;color:var(--dim);margin-top:2px}
+.case-desc{font-size:12px;color:var(--ink2);line-height:1.55;margin:8px 0}
+.case-next{background:var(--bg2);border:1px solid var(--bdr);border-radius:10px;padding:9px 10px;margin-top:9px}
+.case-next b{display:block;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--dim);margin-bottom:3px}
+.case-next span{font-size:12px;color:var(--ink2);line-height:1.5}
+.case-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.case-history{font-size:11px;color:var(--dim);line-height:1.5;margin-top:8px;border-top:1px solid var(--bdr);padding-top:8px}
+
+
+/* DETALLE DE PROYECTO */
+.project-detail{display:none}
+.project-detail.on{display:block}
+.project-list-view.off{display:none}
+.proj-hero{background:var(--ink);border-radius:18px;padding:20px 22px;margin-bottom:14px;position:relative;overflow:hidden;color:white}
+.proj-hero::before{content:'';position:absolute;width:260px;height:260px;border-radius:50%;background:var(--blue);opacity:.18;right:-80px;top:-110px}
+.proj-back{position:relative;z-index:1;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.75);padding:6px 12px;border-radius:10px;font-size:12px;margin-bottom:12px}
+.proj-back:hover{background:rgba(255,255,255,.16);color:white}
+.proj-hero h2{position:relative;z-index:1;font-size:27px;color:white;margin-bottom:5px}
+.proj-hero p{position:relative;z-index:1;color:rgba(255,255,255,.62);font-size:13px;line-height:1.6;max-width:720px}
+.proj-hero-meta{position:relative;z-index:1;display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.proj-tabs{display:flex;gap:4px;background:var(--bg2);border:1px solid var(--bdr);border-radius:12px;padding:4px;margin-bottom:14px;overflow-x:auto}
+.proj-tab{border:none;background:transparent;color:var(--dim);padding:7px 12px;border-radius:9px;font-size:12px;font-weight:600;white-space:nowrap}
+.proj-tab.active{background:white;color:var(--blue-d);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.proj-panel{display:none}
+.proj-panel.active{display:block}
+.proj-summary-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:12px}
+.proj-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.proj-kpi{background:white;border:1px solid var(--bdr);border-radius:12px;padding:11px 12px;text-align:center}
+.proj-kpi .n{font-family:'Fraunces',serif;font-size:24px;color:var(--ink);line-height:1}
+.proj-kpi .l{font-size:10px;color:var(--dim);margin-top:3px}
+.proj-empty{background:white;border:1px dashed var(--bdr);border-radius:12px;padding:24px;text-align:center;color:var(--dim);font-size:13px}
+.proj-next-box{background:white;border:1px solid var(--bdr);border-radius:14px;padding:14px 16px;margin-bottom:10px}
+.proj-next-box h4{font-size:14px;margin-bottom:7px;color:var(--ink)}
+.proj-next-box p{font-size:12px;color:var(--ink2);line-height:1.6}
+@media(max-width:800px){.proj-summary-grid,.proj-kpis{grid-template-columns:1fr}.proj-tabs{padding-bottom:5px}}
+
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="brand"><span class="star">✦</span>Mesa de Trabajo <small>gestión académica y proyectos · v4 modal corregido</small></div>
+    <div class="top-actions">
+      <input class="search" id="globalSearch" placeholder="Buscar tareas, proyectos, notas…" oninput="renderAll()">
+      <div class="userchip"><div class="avatar">FP</div><span>Fabián · Admin</span></div>
+    </div>
+  </div>
+  <div class="body">
+    <aside class="sidebar">
+      <div class="side-head">
+        <div class="side-ey">Centro de mando</div>
+        <div class="side-title">Trabajo</div>
+        <div class="side-sub">Prioridades, proyectos, reuniones y reportes en un solo lugar.</div>
+      </div>
+      <nav class="nav" id="nav">
+        <div class="navitem active" onclick="navTo('inicio')"><span>🏠</span>Inicio</div>
+        <div class="navitem" onclick="navTo('proyectos')"><span>📁</span>Proyectos</div>
+        <div class="navitem" onclick="navTo('tareas')"><span>✅</span>Tareas <b class="badge" id="taskBadge">0</b></div>
+        <div class="navitem" onclick="navTo('semana')"><span>🗓️</span>Semana</div>
+        <div class="navitem" onclick="navTo('casos')"><span>🎯</span>Casos específicos</div>
+        <div class="navitem" onclick="navTo('reuniones')"><span>📝</span>Reuniones</div>
+        <div class="navitem" onclick="navTo('bitacora')"><span>📓</span>Bitácora</div>
+        <div class="navitem" onclick="navTo('reportes')"><span>📊</span>Reportes</div>
+        <div class="navitem" onclick="navTo('acceso')"><span>👥</span>Acceso</div>
+        <div class="navitem" onclick="navTo('ajustes')"><span>⚙️</span>Ajustes</div>
+      </nav>
+      <div class="side-foot">
+        <div class="pulse">
+          <div class="pulse-title">Pulso semanal</div>
+          <div class="pulse-main"><div><div class="pulse-n" id="pulseDone">0%</div><div class="pulse-l">tareas cerradas</div></div><div class="pulse-l" id="pulseDate">—</div></div>
+          <div class="bar"><div class="barf" id="pulseBar"></div></div>
+        </div>
+      </div>
+    </aside>
+    <main class="main">
+      <section class="sec active" id="sec-inicio">
+        <div class="hero">
+          <div>
+            <div class="ey">Prioridad de hoy</div>
+            <h1>Qué mirar, qué cerrar y qué preparar.</h1>
+            <p>Una portada ejecutiva para ordenar el trabajo académico, los proyectos UTE, las reuniones y los pendientes que no pueden perderse.</p>
+          </div>
+          <div class="datebox"><div class="day" id="todayDay">—</div><div class="label" id="todayLabel">hoy</div></div>
+        </div>
+        <div class="grid grid4" style="margin-bottom:12px">
+          <div class="stat"><div class="n" id="sPend">0</div><div class="l">pendientes</div></div>
+          <div class="stat"><div class="n" id="sUrg">0</div><div class="l">urgentes</div></div>
+          <div class="stat"><div class="n" id="sProj">0</div><div class="l">proyectos activos</div></div>
+          <div class="stat"><div class="n" id="sCases">0</div><div class="l">casos abiertos</div></div>
+          <div class="stat"><div class="n" id="sMeet">0</div><div class="l">reuniones próximas</div></div>
+        </div>
+        <div class="grid grid2">
+          <div class="card"><div class="card-title">🔥 Tareas urgentes</div><div id="inicioUrgentes" class="mini-list"></div></div>
+          <div class="card"><div class="card-title">🗓️ Próximas reuniones</div><div id="inicioReuniones" class="mini-list"></div></div>
+          <div class="card"><div class="card-title">📁 Proyectos activos</div><div id="inicioProyectos" class="mini-list"></div></div>
+          <div class="card"><div class="card-title">📓 Últimas notas</div><div id="inicioNotas" class="mini-list"></div></div>
+        </div>
+      </section>
+      <section class="sec" id="sec-proyectos">
+        <div id="projectListView" class="project-list-view">
+          <div class="sec-hd"><div><h2>Proyectos</h2><p>Cada línea de trabajo tiene tareas, hitos, responsables y próximos pasos.</p></div><button class="btn btn-primary" onclick="openModal('project')">+ Proyecto</button></div>
+          <div class="filters" id="projectFilters"><button class="pill active" onclick="setProjectFilter('todos',this)">Todos</button><button class="pill" onclick="setProjectFilter('activo',this)">Activos</button><button class="pill" onclick="setProjectFilter('pausado',this)">Pausados</button><button class="pill" onclick="setProjectFilter('cerrado',this)">Cerrados</button></div>
+          <div class="project-grid" id="projectGrid"></div>
+        </div>
+        <div id="projectDetailView" class="project-detail"></div>
+      </section>
+      <section class="sec" id="sec-tareas">
+        <div class="sec-hd"><div><h2>Tareas</h2><p>Ficha de trabajo: estado, prioridad, responsable, proyecto y fecha límite.</p></div><button class="btn btn-primary" onclick="openModal('task')">+ Tarea</button></div>
+        <div class="filters"><button class="pill active" onclick="setTaskFilter('todas',this)">Todas</button><button class="pill" onclick="setTaskFilter('pendiente',this)">Pendientes</button><button class="pill" onclick="setTaskFilter('en proceso',this)">En proceso</button><button class="pill" onclick="setTaskFilter('bloqueada',this)">Bloqueadas</button><button class="pill" onclick="setTaskFilter('terminada',this)">Terminadas</button><button class="pill" onclick="setTaskFilter('alta',this)">Alta prioridad</button></div>
+        <div id="taskList"></div>
+      </section>
+      <section class="sec" id="sec-semana">
+        <div class="sec-hd"><div><h2>Semana</h2><p>Distribución de tareas y reuniones de lunes a viernes.</p></div><button class="btn btn-outline" onclick="seedWeek()">Ordenar semana</button></div>
+        <div class="week" id="weekGrid"></div>
+      </section>
+      <section class="sec" id="sec-casos">
+        <div class="sec-hd">
+          <div><h2>Casos específicos</h2><p>Seguimiento de estudiantes, docentes, carreras o situaciones puntuales que requieren continuidad.</p></div>
+          <button class="btn btn-primary" onclick="openModal('case')">+ Caso</button>
+        </div>
+        <div class="filters">
+          <button class="pill active" onclick="setCaseFilter('todos',this)">Todos</button>
+          <button class="pill" onclick="setCaseFilter('abierto',this)">Abiertos</button>
+          <button class="pill" onclick="setCaseFilter('en seguimiento',this)">En seguimiento</button>
+          <button class="pill" onclick="setCaseFilter('bloqueado',this)">Bloqueados</button>
+          <button class="pill" onclick="setCaseFilter('cerrado',this)">Cerrados</button>
+          <button class="pill" onclick="setCaseFilter('alta',this)">Alerta alta</button>
+        </div>
+        <div class="case-grid" id="caseGrid"></div>
+      </section>
+      <section class="sec" id="sec-reuniones">
+        <div class="sec-hd"><div><h2>Reuniones</h2><p>Prepara temas, acuerdos, tareas derivadas y cierres.</p></div><button class="btn btn-primary" onclick="openModal('meeting')">+ Reunión</button></div>
+        <div id="meetingList"></div>
+      </section>
+      <section class="sec" id="sec-bitacora">
+        <div class="sec-hd"><div><h2>Bitácora</h2><p>Ideas, acuerdos, decisiones, problemas y borradores vinculados al trabajo.</p></div><button class="btn btn-primary" onclick="openModal('note')">+ Nota</button></div>
+        <div id="noteList"></div>
+      </section>
+      <section class="sec" id="sec-reportes">
+        <div class="sec-hd"><div><h2>Reportes</h2><p>Resumen copiable para jefatura, reuniones o planificación semanal.</p></div><button class="btn btn-primary" onclick="generateReport()">Generar reporte</button></div>
+        <div class="report-box"><div class="card-title">📋 Resumen generado</div><div class="report-output" id="reportOut">Presiona “Generar reporte” para preparar un resumen con avances, urgencias, bloqueos y próximos pasos.</div><div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end"><button class="btn btn-outline" onclick="copyReport()">Copiar</button></div></div>
+      </section>
+      <section class="sec" id="sec-acceso">
+        <div class="sec-hd"><div><h2>Acceso</h2><p>Maqueta de roles y permisos por sección o proyecto.</p></div><button class="btn btn-primary" onclick="openModal('user')">+ Usuario</button></div>
+        <div class="card" style="padding:0" id="accessList"></div>
+      </section>
+      <section class="sec" id="sec-ajustes">
+        <div class="sec-hd"><div><h2>Ajustes</h2><p>Configuración general de la plataforma de trabajo.</p></div></div>
+        <div class="grid grid2">
+          <div class="card"><div class="card-title">⚙️ Identidad</div><div class="formrow"><label>Nombre de la app</label><input id="appName" value="Mesa de Trabajo"></div><div class="formrow"><label>Subtítulo</label><input id="appSub" value="Gestión académica, proyectos y seguimiento UTE"></div><button class="btn btn-primary" onclick="toast('Ajustes guardados')">Guardar</button></div>
+          <div class="card"><div class="card-title">🧭 Módulos futuros</div><p style="font-size:13px;color:var(--dim);line-height:1.7">Próxima iteración sugerida: Archivos/Drive, integración con calendario, etiquetas personalizadas, edición avanzada de casos y exportación de reportes.</p></div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<div class="modal-bg" id="modalBg" onclick="if(event.target===this)closeModal()"><div class="modal" id="modal"></div></div>
+<div class="toast" id="toast"></div>
+<script>
+const $=id=>document.getElementById(id);
+const today=new Date();
+let state=JSON.parse(localStorage.getItem('mesaTrabajoV1')||'null')||{
+ projects:[
+  {id:uid(),name:'Chatbot UAH',desc:'Diseño lingüístico, alertas y rutas de apoyo estudiantil.',status:'activo',priority:'alta',owner:'Fabián',progress:65},
+  {id:uid(),name:'Docencia inclusiva',desc:'Orientaciones, herramientas y taxonomía de barreras.',status:'activo',priority:'alta',owner:'Fabián + Sol',progress:48},
+  {id:uid(),name:'Monitoreo Trayectoria',desc:'Panel de participación, riesgo y seguimiento UTE.',status:'activo',priority:'media',owner:'Fabián',progress:72},
+  {id:uid(),name:'Expresión Escrita II',desc:'Planificación, avances y materiales para Ed. Parvularia.',status:'activo',priority:'media',owner:'Fabián',progress:55}
+ ],
+ tasks:[], meetings:[], cases:[], notes:[], users:[
+  {id:uid(),name:'Fabián Pulgar',email:'fabianpulgaru@gmail.com',role:'Admin',scope:'Todo'},
+  {id:uid(),name:'Sol',email:'sol@uah.cl',role:'Editora por proyecto',scope:'Docencia inclusiva'},
+  {id:uid(),name:'Jefatura',email:'jefatura@uah.cl',role:'Solo lectura',scope:'Reportes y proyectos'}
+ ]
+};
+ensureStateShape();
+if(!state.cases) state.cases=[];
+if(!state.tasks.length){
+ const p=state.projects;
+ state.tasks=[
+  {id:uid(),title:'Preparar demo de chatbot para reunión',desc:'Mostrar lógica de alertas, tiempos y derivaciones.',project:p[0].id,status:'pendiente',priority:'alta',owner:'Fabián',due:isoAdd(0),type:'diseño'},
+  {id:uid(),title:'Cerrar tabla de barreras inclusivas',desc:'Dejar categorías, señales y apoyos asociados.',project:p[1].id,status:'en proceso',priority:'alta',owner:'Fabián + Sol',due:isoAdd(1),type:'documento'},
+  {id:uid(),title:'Actualizar cifras de atenciones',desc:'Cruzar bitácora, tutorías y participación semanal.',project:p[2].id,status:'pendiente',priority:'media',owner:'Fabián',due:isoAdd(2),type:'gestión'},
+  {id:uid(),title:'Diseñar clase de planificación del ensayo',desc:'Materiales, ejemplos y actividad colaborativa.',project:p[3].id,status:'pendiente',priority:'media',owner:'Fabián',due:isoAdd(3),type:'docencia'},
+  {id:uid(),title:'Enviar acuerdos a equipo',desc:'Resumen breve con tareas derivadas y fechas.',project:p[1].id,status:'terminada',priority:'baja',owner:'Fabián',due:isoAdd(-1),type:'correo'}
+ ];
+ state.meetings=[
+  {id:uid(),title:'Revisión avances con jefatura',project:p[2].id,date:isoAdd(1),people:'Daniela, Gonzalo',topics:'Cobertura, reportes, alertas y próximos pasos.',agreements:'Llevar resumen ejecutivo y riesgos abiertos.'},
+  {id:uid(),title:'Trabajo con Sol',project:p[1].id,date:isoAdd(2),people:'Sol, Fabián',topics:'Taxonomía de barreras y herramientas.',agreements:'Definir formato final de la maqueta.'}
+ ];
+ state.cases=[
+  {id:uid(),name:'Estudiante con baja participación',type:'Estudiante',program:'Trayectoria / PACE',project:p[2].id,status:'abierto',alert:'alta',owner:'Fabián',next:'Contactar y definir apoyo académico inicial.',due:isoAdd(1),desc:'Caso requiere seguimiento por baja participación y riesgo de desvinculación.',history:'Registro inicial creado desde monitoreo semanal.'},
+  {id:uid(),name:'Docente requiere orientación inclusiva',type:'Docente',program:'Docencia inclusiva',project:p[1].id,status:'en seguimiento',alert:'media',owner:'Fabián + Sol',next:'Enviar propuesta de ajustes razonables y recursos DUA.',due:isoAdd(3),desc:'Solicitud asociada a barreras de participación en aula.',history:'Conversación inicial realizada; falta formalizar apoyos.'},
+  {id:uid(),name:'Carrera con baja asistencia a talleres',type:'Carrera',program:'UTE',project:p[2].id,status:'abierto',alert:'media',owner:'Fabián',next:'Revisar datos y preparar estrategia de convocatoria.',due:isoAdd(4),desc:'Caso de seguimiento por baja vinculación con actividades de fortalecimiento.',history:'Detectado en revisión de participación.'}
+ ];
+ state.notes=[
+  {id:uid(),kind:'decisión',text:'La plataforma debe separar seguimiento operativo, reportes y trabajo reflexivo. No solo checklist.',project:p[2].id,date:new Date().toISOString()},
+  {id:uid(),kind:'idea',text:'Crear una vista de “temas para jefatura” que se alimente de tareas bloqueadas y acuerdos recientes.',project:p[2].id,date:new Date().toISOString()}
+ ]; save();
+}
+let taskFilter='todas', projectFilter='todos', caseFilter='todos', currentProjectId=null, currentProjectTab='resumen', modalContext={type:null,ctx:''};
+if(!state.cases.length && state.projects?.length){ const p=state.projects; state.cases=[{id:uid(),name:'Caso específico de prueba',type:'Estudiante / docente / carrera',program:'UTE',project:p[0]?.id||'',status:'abierto',alert:'media',owner:'Fabián',next:'Registrar la próxima acción del caso.',due:isoAdd(2),desc:'Usa esta ficha para hacer seguimiento de una situación puntual.',history:'Caso creado como ejemplo inicial.'}]; save(); }
+function uid(){return Math.random().toString(36).slice(2)+Date.now().toString(36)}
+function save(){localStorage.setItem('mesaTrabajoV1',JSON.stringify(state))}
+function isoAdd(n){const d=new Date();d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)}
+
+function ensureStateShape(){
+ state.projects=Array.isArray(state.projects)?state.projects:[];
+ state.tasks=Array.isArray(state.tasks)?state.tasks:[];
+ state.meetings=Array.isArray(state.meetings)?state.meetings:[];
+ state.cases=Array.isArray(state.cases)?state.cases:[];
+ state.notes=Array.isArray(state.notes)?state.notes:[];
+ state.users=Array.isArray(state.users)?state.users:[];
+}
+function val(id, fallback=''){const el=$(id);return el?String(el.value||'').trim():fallback}
+function numVal(id, fallback=0){const n=Number(val(id,fallback));return Number.isFinite(n)?n:fallback}
+function bindModalButtons(){
+ const m=$('modal');
+ m.querySelectorAll('[data-close-modal]').forEach(b=>b.onclick=closeModal);
+ m.querySelectorAll('[data-save-modal]').forEach(b=>b.onclick=handleModalSave);
+}
+function handleModalSave(){
+ try{
+   const t=modalContext.type;
+   if(t==='project')return saveProject();
+   if(t==='task')return saveTask();
+   if(t==='meeting')return saveMeeting();
+   if(t==='note')return saveNote();
+   if(t==='case')return saveCase();
+   if(t==='caseTask')return saveCaseTask(modalContext.ctx);
+   if(t==='user')return saveUser();
+ }catch(err){
+   console.error(err);
+   toast('No se pudo guardar: '+(err?.message||'revisa los campos'));
+ }
+}
+
+function fmt(d){if(!d)return 'Sin fecha';return new Date(d+'T12:00:00').toLocaleDateString('es-CL',{day:'2-digit',month:'short'})}
+function projName(id){return state.projects.find(p=>p.id===id)?.name||'Sin proyecto'}
+function navTo(sec){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));$('sec-'+sec).classList.add('active');document.querySelectorAll('.navitem').forEach(n=>n.classList.remove('active'));[...document.querySelectorAll('.navitem')].find(n=>n.getAttribute('onclick')?.includes(sec))?.classList.add('active');renderAll()}
+function searchFilter(arr,fields){const q=($('globalSearch').value||'').toLowerCase().trim();if(!q)return arr;return arr.filter(o=>fields.some(f=>String(o[f]||'').toLowerCase().includes(q)))}
+function renderAll(){renderHeader();renderInicio();renderProjects();renderProjectDetail();renderTasks();renderWeek();renderCases();renderMeetings();renderNotes();renderAccess();}
+function renderHeader(){
+ $('todayDay').textContent=today.toLocaleDateString('es-CL',{day:'2-digit'});$('todayLabel').textContent=today.toLocaleDateString('es-CL',{weekday:'long',month:'long'});
+ const pend=state.tasks.filter(t=>t.status!=='terminada');const done=state.tasks.filter(t=>t.status==='terminada').length;const pct=state.tasks.length?Math.round(done/state.tasks.length*100):0;
+ $('pulseDone').textContent=pct+'%';$('pulseBar').style.width=pct+'%';$('pulseDate').textContent='Semana '+getWeekNumber(today);$('taskBadge').textContent=pend.length; $('taskBadge').style.display=pend.length?'inline':'none';
+}
+function getWeekNumber(d){const date=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const dayNum=date.getUTCDay()||7;date.setUTCDate(date.getUTCDate()+4-dayNum);const yearStart=new Date(Date.UTC(date.getUTCFullYear(),0,1));return Math.ceil((((date-yearStart)/86400000)+1)/7)}
+function renderInicio(){
+ const pend=state.tasks.filter(t=>t.status!=='terminada');$('sPend').textContent=pend.length;$('sUrg').textContent=pend.filter(t=>t.priority==='alta').length;$('sProj').textContent=state.projects.filter(p=>p.status==='activo').length;$('sCases').textContent=(state.cases||[]).filter(c=>c.status!=='cerrado').length;$('sMeet').textContent=state.meetings.filter(m=>m.date>=isoAdd(0)).length;
+ mini('inicioUrgentes', pend.filter(t=>t.priority==='alta').sort((a,b)=>(a.due||'').localeCompare(b.due||'')).slice(0,5).map(t=>({dot:t.priority,title:t.title,meta:`${projName(t.project)} · ${fmt(t.due)} · ${t.owner}`})), 'No hay urgencias abiertas.');
+ mini('inicioReuniones', state.meetings.filter(m=>m.date>=isoAdd(0)).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,4).map(m=>({dot:'media',title:m.title,meta:`${fmt(m.date)} · ${m.people}`})), 'No hay reuniones próximas.');
+ mini('inicioProyectos', state.projects.filter(p=>p.status==='activo').slice(0,4).map(p=>({dot:p.priority,title:p.name,meta:`${p.progress}% · ${p.owner}`})), 'No hay proyectos activos.');
+ mini('inicioNotas', state.notes.slice().sort((a,b)=>b.date.localeCompare(a.date)).slice(0,4).map(n=>({dot:'baja',title:n.kind.toUpperCase(),meta:n.text.slice(0,100)})), 'No hay notas todavía.');
+}
+function mini(id,items,empty){$(id).innerHTML=items.length?items.map(i=>`<div class="mini-item"><span class="dot ${i.dot}"></span><div><div class="mini-title">${esc(i.title)}</div><div class="mini-meta">${esc(i.meta)}</div></div></div>`).join(''):`<div class="empty"><div class="ico">✦</div><p>${empty}</p></div>`}
+function renderProjects(){
+ let arr=searchFilter(state.projects,['name','desc','owner','status']); if(projectFilter!=='todos')arr=arr.filter(p=>p.status===projectFilter);
+ $('projectGrid').innerHTML=arr.length?arr.map(p=>{
+   const tareas=state.tasks.filter(t=>t.project===p.id);
+   const abiertas=tareas.filter(t=>t.status!=='terminada').length;
+   const casos=(state.cases||[]).filter(c=>c.project===p.id && c.status!=='cerrado').length;
+   const reuniones=state.meetings.filter(m=>m.project===p.id && m.date>=isoAdd(0)).length;
+   return `<div class="project-card" onclick="openProject('${p.id}')">
+     <div class="project-top"><div class="project-name">${esc(p.name)}</div><span class="tag ${tagClass(p.priority)}">${p.priority}</span></div>
+     <p class="project-desc">${esc(p.desc)}</p>
+     <div class="progress-line"><div style="width:${p.progress}%"></div></div>
+     <div class="project-foot"><span>${p.status} · ${p.owner}</span><span>${p.progress}%</span></div>
+     <div class="project-foot" style="margin-top:8px"><span>${abiertas} tareas abiertas · ${casos} casos · ${reuniones} reuniones</span><span>abrir →</span></div>
+     <div style="display:flex;gap:6px;margin-top:12px" onclick="event.stopPropagation()">
+       <button class="btn btn-outline btn-sm" onclick="openModal('task','${p.id}')">+ Tarea</button>
+       <button class="btn btn-outline btn-sm" onclick="openProject('${p.id}')">Abrir</button>
+       <button class="btn btn-ghost btn-sm" onclick="deleteProject('${p.id}')">Eliminar</button>
+     </div>
+   </div>`
+ }).join(''):`<div class="empty"><div class="ico">📁</div><p>No hay proyectos con este filtro.</p></div>`;
+}
+
+function openProject(id){ensureStateShape();currentProjectId=id;currentProjectTab='resumen';$('projectListView').classList.add('off');$('projectDetailView').classList.add('on');renderProjectDetail();setTimeout(()=>{$('sec-proyectos')?.scrollIntoView({block:'start'});},0)}
+function closeProjectDetail(){currentProjectId=null;$('projectDetailView').classList.remove('on');$('projectListView').classList.remove('off');renderProjects()}
+function setProjectTab(tab,el){currentProjectTab=tab;document.querySelectorAll('.proj-tab').forEach(t=>t.classList.remove('active'));if(el)el.classList.add('active');renderProjectDetail()}
+function renderProjectDetail(){
+ const box=$('projectDetailView'); if(!box)return;
+ if(!currentProjectId){box.innerHTML='';return}
+ const p=state.projects.find(x=>x.id===currentProjectId); if(!p){closeProjectDetail();return}
+ const tareas=state.tasks.filter(t=>t.project===p.id);
+ const abiertas=tareas.filter(t=>t.status!=='terminada');
+ const cerradas=tareas.filter(t=>t.status==='terminada');
+ const reuniones=state.meetings.filter(m=>m.project===p.id).sort((a,b)=>(a.date||'').localeCompare(b.date||''));
+ const casos=(state.cases||[]).filter(c=>c.project===p.id);
+ const notas=state.notes.filter(n=>n.project===p.id).sort((a,b)=>b.date.localeCompare(a.date));
+ const pct=tareas.length?Math.round(cerradas.length/tareas.length*100):p.progress||0;
+ const tab=currentProjectTab;
+ box.innerHTML=`<div class="proj-hero">
+   <button class="proj-back" onclick="closeProjectDetail()">← Volver a proyectos</button>
+   <h2>${esc(p.name)}</h2>
+   <p>${esc(p.desc||'Sin descripción todavía.')}</p>
+   <div class="proj-hero-meta">
+     <span class="tag ${tagClass(p.priority)}">Prioridad ${esc(p.priority)}</span>
+     <span class="tag tag-blue">${esc(p.status)}</span>
+     <span class="tag tag-rose">${esc(p.owner)}</span>
+     <span class="tag tag-gold">${pct}% de avance real</span>
+   </div>
+ </div>
+ <div class="proj-tabs">
+   ${projTabBtn('resumen','Resumen',tab)}
+   ${projTabBtn('tareas','Tareas',tab)}
+   ${projTabBtn('casos','Casos',tab)}
+   ${projTabBtn('reuniones','Reuniones',tab)}
+   ${projTabBtn('bitacora','Bitácora',tab)}
+   ${projTabBtn('proximos','Próximos pasos',tab)}
+ </div>
+ <div class="proj-panel ${tab==='resumen'?'active':''}">
+   <div class="proj-kpis">
+     <div class="proj-kpi"><div class="n">${tareas.length}</div><div class="l">tareas</div></div>
+     <div class="proj-kpi"><div class="n">${abiertas.length}</div><div class="l">abiertas</div></div>
+     <div class="proj-kpi"><div class="n">${casos.filter(c=>c.status!=='cerrado').length}</div><div class="l">casos abiertos</div></div>
+     <div class="proj-kpi"><div class="n">${reuniones.filter(m=>m.date>=isoAdd(0)).length}</div><div class="l">reuniones próximas</div></div>
+   </div>
+   <div class="proj-summary-grid">
+     <div class="card"><div class="card-title">🔥 Pendientes principales</div>${projectMiniTasks(abiertas.slice().sort((a,b)=>(a.due||'').localeCompare(b.due||'')).slice(0,5))}</div>
+     <div class="card"><div class="card-title">🎯 Casos vinculados</div>${projectMiniCases(casos.filter(c=>c.status!=='cerrado').slice(0,4))}</div>
+     <div class="card"><div class="card-title">📝 Próximas reuniones</div>${projectMiniMeetings(reuniones.filter(m=>m.date>=isoAdd(0)).slice(0,4))}</div>
+     <div class="card"><div class="card-title">📓 Últimas notas</div>${projectMiniNotes(notas.slice(0,4))}</div>
+   </div>
+ </div>
+ <div class="proj-panel ${tab==='tareas'?'active':''}">
+   <div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-primary btn-sm" onclick="openModal('task','${p.id}')">+ Tarea del proyecto</button></div>
+   ${projectTaskList(tareas)}
+ </div>
+ <div class="proj-panel ${tab==='casos'?'active':''}">
+   <div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-primary btn-sm" onclick="openModal('case','${p.id}')">+ Caso del proyecto</button></div>
+   <div class="case-grid">${casos.length?casos.map(projectCaseCard).join(''):'<div class="proj-empty">No hay casos vinculados a este proyecto.</div>'}</div>
+ </div>
+ <div class="proj-panel ${tab==='reuniones'?'active':''}">
+   <div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-primary btn-sm" onclick="openModal('meeting','${p.id}')">+ Reunión del proyecto</button></div>
+   ${projectMeetingList(reuniones)}
+ </div>
+ <div class="proj-panel ${tab==='bitacora'?'active':''}">
+   <div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-primary btn-sm" onclick="openModal('note','${p.id}')">+ Nota del proyecto</button></div>
+   ${projectNoteList(notas)}
+ </div>
+ <div class="proj-panel ${tab==='proximos'?'active':''}">
+   ${projectNextSteps(p,abiertas,casos,reuniones)}
+ </div>`;
+}
+function projTabBtn(id,label,current){return `<button class="proj-tab ${current===id?'active':''}" onclick="setProjectTab('${id}',this)">${label}</button>`}
+function projectMiniTasks(items){return items.length?items.map(t=>`<div class="mini-item"><span class="dot ${t.priority}"></span><div><div class="mini-title">${esc(t.title)}</div><div class="mini-meta">${esc(t.status)} · ${fmt(t.due)} · ${esc(t.owner)}</div></div></div>`).join(''):'<div class="proj-empty">No hay tareas pendientes.</div>'}
+function projectMiniCases(items){return items.length?items.map(c=>`<div class="mini-item"><span class="dot ${c.alert}"></span><div><div class="mini-title">${esc(c.name)}</div><div class="mini-meta">alerta ${esc(c.alert)} · ${esc(c.status)}</div></div></div>`).join(''):'<div class="proj-empty">No hay casos abiertos.</div>'}
+function projectMiniMeetings(items){return items.length?items.map(m=>`<div class="mini-item"><span class="dot media"></span><div><div class="mini-title">${esc(m.title)}</div><div class="mini-meta">${fmt(m.date)} · ${esc(m.people)}</div></div></div>`).join(''):'<div class="proj-empty">No hay reuniones próximas.</div>'}
+function projectMiniNotes(items){return items.length?items.map(n=>`<div class="mini-item"><span class="dot baja"></span><div><div class="mini-title">${esc(n.kind)}</div><div class="mini-meta">${esc(n.text.slice(0,95))}</div></div></div>`).join(''):'<div class="proj-empty">No hay notas del proyecto.</div>'}
+function projectTaskList(items){return items.length?items.map(t=>`<div class="task ${t.priority}"><div class="check ${t.status==='terminada'?'done':''}" onclick="toggleTask('${t.id}')"></div><div class="task-body"><div class="task-title ${t.status==='terminada'?'done':''}">${esc(t.title)}</div><div class="task-desc">${esc(t.desc||'')}</div><div class="task-meta"><span class="tag ${tagClass(t.priority)}">${t.priority}</span><span class="tag tag-olive">${t.status}</span><span class="tag tag-gold">${fmt(t.due)}</span><span class="tag tag-rose">${esc(t.owner)}</span><span class="tag tag-blue">${esc(t.type)}</span></div></div><div class="task-actions"><button class="btn btn-ghost btn-sm" onclick="deleteTask('${t.id}')">✕</button></div></div>`).join(''):'<div class="proj-empty">No hay tareas en este proyecto.</div>'}
+function projectCaseCard(c){return `<div class="case-card alerta-${esc(c.alert)}"><div class="case-top"><div><div class="case-name">${esc(c.name)}</div><div class="case-type">${esc(c.type)} · ${esc(c.program||'Sin programa')}</div></div><span class="tag ${tagClass(c.alert)}">alerta ${esc(c.alert)}</span></div><div class="case-desc">${esc(c.desc||'')}</div><div class="case-meta"><span class="tag tag-olive">${esc(c.status)}</span><span class="tag tag-gold">${fmt(c.due)}</span><span class="tag tag-rose">${esc(c.owner)}</span></div><div class="case-next"><b>Próxima acción</b><span>${esc(c.next||'Sin próxima acción definida.')}</span></div><div class="case-history"><b>Historial:</b> ${esc(c.history||'Sin historial registrado.')}</div><div style="display:flex;gap:6px;margin-top:12px;justify-content:flex-end"><button class="btn btn-outline btn-sm" onclick="openModal('caseTask','${c.id}')">+ Tarea</button><button class="btn btn-ghost btn-sm" onclick="closeCase('${c.id}')">${c.status==='cerrado'?'Reabrir':'Cerrar'}</button></div></div>`}
+function projectMeetingList(items){return items.length?items.map(m=>`<div class="meeting"><div class="meeting-head"><div><div class="meeting-title">${esc(m.title)}</div><div class="meeting-meta">${fmt(m.date)} · ${esc(m.people)}</div></div><button class="btn btn-ghost btn-sm" onclick="deleteMeeting('${m.id}')">✕</button></div><p><b>Temas:</b> ${esc(m.topics||'')}</p><p><b>Acuerdos:</b> ${esc(m.agreements||'')}</p></div>`).join(''):'<div class="proj-empty">No hay reuniones en este proyecto.</div>'}
+function projectNoteList(items){return items.length?items.map(n=>`<div class="note"><div class="note-head"><div class="note-kind">${esc(n.kind)}</div><div class="note-date">${new Date(n.date).toLocaleString('es-CL')}</div></div><p>${esc(n.text)}</p><div style="margin-top:8px"><button class="btn btn-ghost btn-sm" onclick="deleteNote('${n.id}')">Eliminar</button></div></div>`).join(''):'<div class="proj-empty">No hay notas en este proyecto.</div>'}
+function projectNextSteps(p,tasks,cases,meetings){
+ const high=tasks.filter(t=>t.priority==='alta').slice(0,3);
+ const blocked=tasks.filter(t=>t.status==='bloqueada').slice(0,3);
+ const caseNext=cases.filter(c=>c.status!=='cerrado').slice(0,3);
+ return `<div class="proj-next-box"><h4>1. Cerrar urgencias</h4><p>${high.length?high.map(t=>`• ${esc(t.title)} — ${fmt(t.due)}`).join('<br>'):'No hay tareas de alta prioridad abiertas.'}</p></div>
+ <div class="proj-next-box"><h4>2. Desbloquear pendientes</h4><p>${blocked.length?blocked.map(t=>`• ${esc(t.title)} — ${esc(t.desc||'sin detalle')}`).join('<br>'):'No hay bloqueos registrados.'}</p></div>
+ <div class="proj-next-box"><h4>3. Seguir casos específicos</h4><p>${caseNext.length?caseNext.map(c=>`• ${esc(c.name)} — ${esc(c.next||'sin próxima acción')}`).join('<br>'):'No hay casos abiertos vinculados.'}</p></div>
+ <div class="proj-next-box"><h4>4. Preparar próxima reunión</h4><p>${meetings.filter(m=>m.date>=isoAdd(0)).length?meetings.filter(m=>m.date>=isoAdd(0)).slice(0,2).map(m=>`• ${fmt(m.date)} · ${esc(m.title)} — ${esc(m.topics||'sin temas')}`).join('<br>'):'No hay reuniones próximas registradas.'}</p></div>`;
+}
+
+function tagClass(v){return v==='alta'?'tag-clay':v==='media'?'tag-gold':'tag-olive'}
+function setProjectFilter(f,el){projectFilter=f;el.parentElement.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));el.classList.add('active');renderProjects()}
+function setTaskFilter(f,el){taskFilter=f;el.parentElement.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));el.classList.add('active');renderTasks()}
+function renderTasks(){
+ let arr=searchFilter(state.tasks,['title','desc','owner','type','status','priority']);
+ if(taskFilter!=='todas')arr=arr.filter(t=>['pendiente','en proceso','bloqueada','terminada'].includes(taskFilter)?t.status===taskFilter:t.priority===taskFilter);
+ arr.sort((a,b)=>(a.status==='terminada')-(b.status==='terminada')||(a.due||'').localeCompare(b.due||''));
+ $('taskList').innerHTML=arr.length?arr.map(t=>`<div class="task ${t.priority}"><div class="check ${t.status==='terminada'?'done':''}" onclick="toggleTask('${t.id}')"></div><div class="task-body"><div class="task-title ${t.status==='terminada'?'done':''}">${esc(t.title)}</div><div class="task-desc">${esc(t.desc||'')}</div><div class="task-meta"><span class="tag tag-blue">${esc(projName(t.project))}</span><span class="tag ${tagClass(t.priority)}">${t.priority}</span><span class="tag tag-olive">${t.status}</span><span class="tag tag-gold">${fmt(t.due)}</span><span class="tag tag-rose">${esc(t.owner)}</span></div></div><div class="task-actions"><button class="btn btn-ghost btn-sm" onclick="deleteTask('${t.id}')">✕</button></div></div>`).join(''):`<div class="empty"><div class="ico">✅</div><p>No hay tareas para este filtro.</p></div>`;
+}
+function renderWeek(){
+ const names=['Lunes','Martes','Miércoles','Jueves','Viernes']; const monday=new Date(today); const day=today.getDay()||7; monday.setDate(today.getDate()-day+1);
+ $('weekGrid').innerHTML=names.map((name,i)=>{const d=new Date(monday);d.setDate(monday.getDate()+i);const iso=d.toISOString().slice(0,10);const tasks=state.tasks.filter(t=>t.due===iso);const meets=state.meetings.filter(m=>m.date===iso);return `<div class="daycol"><div class="dayhd"><div class="dayname">${name}</div><div class="daydate">${fmt(iso)}</div></div><div class="daybody">${meets.map(m=>`<div class="daytask"><b>📝 ${esc(m.title)}</b><p>${esc(m.people)}</p></div>`).join('')}${tasks.map(t=>`<div class="daytask"><b>${t.status==='terminada'?'✓':'•'} ${esc(t.title)}</b><p>${esc(projName(t.project))} · ${t.priority}</p></div>`).join('')||(!meets.length?'<div class="empty" style="padding:20px 5px"><p>Sin pendientes</p></div>':'')}</div></div>`}).join('');
+}
+function setCaseFilter(f,el){caseFilter=f;el.parentElement.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));el.classList.add('active');renderCases()}
+function renderCases(){
+ let arr=searchFilter(state.cases||[],['name','type','program','status','alert','owner','desc','next','history']);
+ if(caseFilter!=='todos')arr=arr.filter(c=>['abierto','en seguimiento','bloqueado','cerrado'].includes(caseFilter)?c.status===caseFilter:c.alert===caseFilter);
+ arr.sort((a,b)=>({alta:0,media:1,baja:2}[a.alert]??3)-({alta:0,media:1,baja:2}[b.alert]??3)||(a.due||'').localeCompare(b.due||''));
+ $('caseGrid').innerHTML=arr.length?arr.map(c=>`<div class="case-card alerta-${esc(c.alert)}">
+   <div class="case-top">
+     <div><div class="case-name">${esc(c.name)}</div><div class="case-type">${esc(c.type)} · ${esc(c.program||'Sin programa')}</div></div>
+     <span class="tag ${tagClass(c.alert)}">alerta ${esc(c.alert)}</span>
+   </div>
+   <div class="case-desc">${esc(c.desc||'')}</div>
+   <div class="case-meta">
+     <span class="tag tag-blue">${esc(projName(c.project))}</span>
+     <span class="tag tag-olive">${esc(c.status)}</span>
+     <span class="tag tag-gold">${fmt(c.due)}</span>
+     <span class="tag tag-rose">${esc(c.owner)}</span>
+   </div>
+   <div class="case-next"><b>Próxima acción</b><span>${esc(c.next||'Sin próxima acción definida.')}</span></div>
+   <div class="case-history"><b>Historial:</b> ${esc(c.history||'Sin historial registrado.')}</div>
+   <div style="display:flex;gap:6px;margin-top:12px;justify-content:flex-end">
+     <button class="btn btn-outline btn-sm" onclick="openModal('caseTask','${c.id}')">+ Tarea</button>
+     <button class="btn btn-ghost btn-sm" onclick="closeCase('${c.id}')">${c.status==='cerrado'?'Reabrir':'Cerrar'}</button>
+     <button class="btn btn-ghost btn-sm" onclick="deleteCase('${c.id}')">✕</button>
+   </div>
+ </div>`).join(''):`<div class="empty"><div class="ico">🎯</div><p>No hay casos con este filtro.</p></div>`;
+}
+function renderMeetings(){
+ const arr=searchFilter(state.meetings,['title','people','topics','agreements']).sort((a,b)=>(a.date||'').localeCompare(b.date||''));
+ $('meetingList').innerHTML=arr.length?arr.map(m=>`<div class="meeting"><div class="meeting-head"><div><div class="meeting-title">${esc(m.title)}</div><div class="meeting-meta">${fmt(m.date)} · ${esc(m.people)} · ${esc(projName(m.project))}</div></div><button class="btn btn-ghost btn-sm" onclick="deleteMeeting('${m.id}')">✕</button></div><p><b>Temas:</b> ${esc(m.topics||'')}</p><p><b>Acuerdos:</b> ${esc(m.agreements||'')}</p></div>`).join(''):`<div class="empty"><div class="ico">📝</div><p>No hay reuniones registradas.</p></div>`;
+}
+function renderNotes(){
+ const arr=searchFilter(state.notes,['kind','text']).sort((a,b)=>b.date.localeCompare(a.date));
+ $('noteList').innerHTML=arr.length?arr.map(n=>`<div class="note"><div class="note-head"><div class="note-kind">${esc(n.kind)} · ${esc(projName(n.project))}</div><div class="note-date">${new Date(n.date).toLocaleString('es-CL')}</div></div><p>${esc(n.text)}</p><div style="margin-top:8px"><button class="btn btn-ghost btn-sm" onclick="deleteNote('${n.id}')">Eliminar</button></div></div>`).join(''):`<div class="empty"><div class="ico">📓</div><p>No hay notas todavía.</p></div>`;
+}
+function renderAccess(){
+ $('accessList').innerHTML=state.users.map(u=>`<div class="access-row"><div><div class="access-name">${esc(u.name)}</div><div class="access-mail">${esc(u.email)}</div></div><div style="display:flex;align-items:center;gap:7px"><span class="tag tag-blue">${esc(u.role)}</span><span class="tag tag-gold">${esc(u.scope)}</span><button class="btn btn-ghost btn-sm" onclick="deleteUser('${u.id}')">✕</button></div></div>`).join('');
+}
+function openModal(type,ctx=''){
+ ensureStateShape();
+ modalContext={type,ctx};
+ const projectOpts=state.projects.map(p=>`<option value="${p.id}" ${ctx===p.id?'selected':''}>${esc(p.name)}</option>`).join('');
+ const m=$('modal');
+ if(type==='project')m.innerHTML=`<h3>Nuevo proyecto</h3>
+   <div class="formrow"><label>Nombre</label><input id="mName" autocomplete="off"></div>
+   <div class="formrow"><label>Descripción</label><textarea id="mDesc"></textarea></div>
+   <div class="grid grid2"><div class="formrow"><label>Estado</label><select id="mStatus"><option value="activo">activo</option><option value="pausado">pausado</option><option value="cerrado">cerrado</option></select></div><div class="formrow"><label>Prioridad</label><select id="mPriority"><option value="alta">alta</option><option value="media">media</option><option value="baja">baja</option></select></div></div>
+   <div class="grid grid2"><div class="formrow"><label>Responsable</label><input id="mOwner" value="Fabián"></div><div class="formrow"><label>Avance %</label><input id="mProgress" type="number" min="0" max="100" value="0"></div></div>
+   <div class="actions"><button type="button" class="btn btn-outline" data-close-modal>Cancelar</button><button type="button" class="btn btn-primary" data-save-modal>Guardar</button></div>`;
+ if(type==='task')m.innerHTML=`<h3>Nueva tarea</h3>
+   <div class="formrow"><label>Título</label><input id="mTitle" autocomplete="off"></div>
+   <div class="formrow"><label>Descripción</label><textarea id="mDesc"></textarea></div>
+   <div class="formrow"><label>Proyecto</label><select id="mProject">${projectOpts}</select></div>
+   <div class="grid grid2"><div class="formrow"><label>Estado</label><select id="mStatus"><option value="pendiente">pendiente</option><option value="en proceso">en proceso</option><option value="bloqueada">bloqueada</option><option value="terminada">terminada</option></select></div><div class="formrow"><label>Prioridad</label><select id="mPriority"><option value="alta">alta</option><option value="media">media</option><option value="baja">baja</option></select></div></div>
+   <div class="grid grid3"><div class="formrow"><label>Responsable</label><input id="mOwner" value="Fabián"></div><div class="formrow"><label>Fecha límite</label><input id="mDue" type="date" value="${isoAdd(1)}"></div><div class="formrow"><label>Tipo</label><select id="mType"><option value="gestión">gestión</option><option value="docencia">docencia</option><option value="diseño">diseño</option><option value="evaluación">evaluación</option><option value="correo">correo</option><option value="documento">documento</option><option value="seguimiento">seguimiento</option></select></div></div>
+   <div class="actions"><button type="button" class="btn btn-outline" data-close-modal>Cancelar</button><button type="button" class="btn btn-primary" data-save-modal>Guardar</button></div>`;
+ if(type==='meeting')m.innerHTML=`<h3>Nueva reunión</h3>
+   <div class="formrow"><label>Título</label><input id="mTitle" autocomplete="off"></div>
+   <div class="grid grid2"><div class="formrow"><label>Fecha</label><input id="mDate" type="date" value="${isoAdd(1)}"></div><div class="formrow"><label>Proyecto</label><select id="mProject">${projectOpts}</select></div></div>
+   <div class="formrow"><label>Participantes</label><input id="mPeople"></div>
+   <div class="formrow"><label>Temas</label><textarea id="mTopics"></textarea></div>
+   <div class="formrow"><label>Acuerdos / próximos pasos</label><textarea id="mAgreements"></textarea></div>
+   <div class="actions"><button type="button" class="btn btn-outline" data-close-modal>Cancelar</button><button type="button" class="btn btn-primary" data-save-modal>Guardar</button></div>`;
+ if(type==='note')m.innerHTML=`<h3>Nueva nota</h3>
+   <div class="grid grid2"><div class="formrow"><label>Tipo</label><select id="mKind"><option value="idea">idea</option><option value="decisión">decisión</option><option value="acuerdo">acuerdo</option><option value="problema">problema</option><option value="borrador">borrador</option><option value="reflexión">reflexión</option></select></div><div class="formrow"><label>Proyecto</label><select id="mProject">${projectOpts}</select></div></div>
+   <div class="formrow"><label>Nota</label><textarea id="mText" style="min-height:130px"></textarea></div>
+   <div class="actions"><button type="button" class="btn btn-outline" data-close-modal>Cancelar</button><button type="button" class="btn btn-primary" data-save-modal>Guardar</button></div>`;
+ if(type==='case')m.innerHTML=`<h3>Nuevo caso específico</h3>
+   <div class="formrow"><label>Nombre del caso</label><input id="mName" placeholder="Ej: Estudiante con baja participación" autocomplete="off"></div>
+   <div class="grid grid2"><div class="formrow"><label>Tipo</label><select id="mType"><option value="Estudiante">Estudiante</option><option value="Docente">Docente</option><option value="Carrera">Carrera</option><option value="Equipo">Equipo</option><option value="Jefatura">Jefatura</option><option value="Otro">Otro</option></select></div><div class="formrow"><label>Programa / línea</label><input id="mProgram" placeholder="PACE, UTE, curso, chatbot…"></div></div>
+   <div class="formrow"><label>Descripción</label><textarea id="mDesc" placeholder="Qué ocurre, por qué requiere seguimiento…"></textarea></div>
+   <div class="formrow"><label>Proyecto asociado</label><select id="mProject">${projectOpts}</select></div>
+   <div class="grid grid3"><div class="formrow"><label>Estado</label><select id="mStatus"><option value="abierto">abierto</option><option value="en seguimiento">en seguimiento</option><option value="bloqueado">bloqueado</option><option value="cerrado">cerrado</option></select></div><div class="formrow"><label>Nivel de alerta</label><select id="mAlert"><option value="alta">alta</option><option value="media">media</option><option value="baja">baja</option></select></div><div class="formrow"><label>Fecha próxima acción</label><input id="mDue" type="date" value="${isoAdd(1)}"></div></div>
+   <div class="formrow"><label>Responsable</label><input id="mOwner" value="Fabián"></div>
+   <div class="formrow"><label>Próxima acción</label><textarea id="mNext" placeholder="Qué hay que hacer ahora…"></textarea></div>
+   <div class="formrow"><label>Historial / notas internas</label><textarea id="mHistory" placeholder="Contactos, acuerdos, decisiones, antecedentes…"></textarea></div>
+   <div class="actions"><button type="button" class="btn btn-outline" data-close-modal>Cancelar</button><button type="button" class="btn btn-primary" data-save-modal>Guardar</button></div>`;
+ if(type==='caseTask'){
+   const c=(state.cases||[]).find(x=>x.id===ctx);
+   const selectedProject = c?.project || currentProjectId || state.projects[0]?.id || '';
+   const opts=state.projects.map(p=>`<option value="${p.id}" ${selectedProject===p.id?'selected':''}>${esc(p.name)}</option>`).join('');
+   m.innerHTML=`<h3>Tarea derivada de caso</h3>
+   <div class="formrow"><label>Caso</label><input value="${esc(c?.name||'Caso')}" disabled></div>
+   <div class="formrow"><label>Título</label><input id="mTitle" value="Seguimiento: ${esc(c?.name||'caso')}"></div>
+   <div class="formrow"><label>Descripción</label><textarea id="mDesc">${esc(c?.next||'')}</textarea></div>
+   <div class="formrow"><label>Proyecto</label><select id="mProject">${opts}</select></div>
+   <div class="grid grid3"><div class="formrow"><label>Estado</label><select id="mStatus"><option value="pendiente">pendiente</option><option value="en proceso">en proceso</option><option value="bloqueada">bloqueada</option><option value="terminada">terminada</option></select></div><div class="formrow"><label>Prioridad</label><select id="mPriority"><option value="alta" ${c?.alert==='alta'?'selected':''}>alta</option><option value="media" ${c?.alert==='media'?'selected':''}>media</option><option value="baja" ${c?.alert==='baja'?'selected':''}>baja</option></select></div><div class="formrow"><label>Fecha límite</label><input id="mDue" type="date" value="${c?.due||isoAdd(1)}"></div></div>
+   <div class="formrow"><label>Responsable</label><input id="mOwner" value="${esc(c?.owner||'Fabián')}"></div>
+   <div class="actions"><button type="button" class="btn btn-outline" data-close-modal>Cancelar</button><button type="button" class="btn btn-primary" data-save-modal>Crear tarea</button></div>`;
+ }
+ if(type==='user')m.innerHTML=`<h3>Nuevo usuario</h3>
+   <div class="formrow"><label>Nombre</label><input id="mName"></div><div class="formrow"><label>Correo</label><input id="mEmail" type="email"></div>
+   <div class="grid grid2"><div class="formrow"><label>Rol</label><select id="mRole"><option value="Admin">Admin</option><option value="Editor general">Editor general</option><option value="Editor por proyecto">Editor por proyecto</option><option value="Solo lectura">Solo lectura</option></select></div><div class="formrow"><label>Alcance</label><input id="mScope" placeholder="Todo / Proyecto / Reportes"></div></div>
+   <div class="actions"><button type="button" class="btn btn-outline" data-close-modal>Cancelar</button><button type="button" class="btn btn-primary" data-save-modal>Guardar</button></div>`;
+ $('modalBg').classList.add('on');
+ bindModalButtons();
+}
+function closeModal(){$('modalBg').classList.remove('on')}
+function saveProject(){
+ ensureStateShape();
+ const name=val('mName');
+ if(!name){toast('Ponle nombre al proyecto');return}
+ const project={id:uid(),name,desc:val('mDesc'),status:val('mStatus','activo'),priority:val('mPriority','media'),owner:val('mOwner','Fabián'),progress:Math.max(0,Math.min(100,numVal('mProgress',0)))};
+ state.projects.push(project);
+ save(); closeModal(); renderAll(); toast('Proyecto creado');
+}
+function saveTask(){
+ ensureStateShape();
+ if(!state.projects.length){toast('Primero crea un proyecto');return}
+ const title=val('mTitle');
+ if(!title){toast('Ponle título a la tarea');return}
+ state.tasks.push({id:uid(),title,desc:val('mDesc'),project:val('mProject',currentProjectId||state.projects[0]?.id||''),status:val('mStatus','pendiente'),priority:val('mPriority','media'),owner:val('mOwner','Fabián'),due:val('mDue'),type:val('mType','gestión')});
+ save(); closeModal(); renderAll(); toast('Tarea creada');
+}
+function saveMeeting(){
+ ensureStateShape();
+ const title=val('mTitle');
+ if(!title){toast('Ponle título a la reunión');return}
+ state.meetings.push({id:uid(),title,project:val('mProject',currentProjectId||state.projects[0]?.id||''),date:val('mDate'),people:val('mPeople'),topics:val('mTopics'),agreements:val('mAgreements')});
+ save(); closeModal(); renderAll(); toast('Reunión guardada');
+}
+function saveNote(){
+ ensureStateShape();
+ const text=val('mText');
+ if(!text){toast('Escribe la nota antes de guardar');return}
+ state.notes.push({id:uid(),kind:val('mKind','idea'),text,project:val('mProject',currentProjectId||state.projects[0]?.id||''),date:new Date().toISOString()});
+ save(); closeModal(); renderAll(); toast('Nota guardada');
+}
+function saveCase(){
+ ensureStateShape();
+ const name=val('mName');
+ if(!name){toast('Ponle nombre al caso');return}
+ state.cases.push({id:uid(),name,type:val('mType','Otro'),program:val('mProgram'),project:val('mProject',currentProjectId||state.projects[0]?.id||''),status:val('mStatus','abierto'),alert:val('mAlert','media'),owner:val('mOwner','Fabián'),due:val('mDue'),desc:val('mDesc'),next:val('mNext'),history:val('mHistory')});
+ save(); closeModal(); renderAll(); toast('Caso guardado');
+}
+function saveCaseTask(caseId){
+ ensureStateShape();
+ const c=(state.cases||[]).find(x=>x.id===caseId);
+ const title=val('mTitle') || (c?'Seguimiento: '+c.name:'Tarea de seguimiento');
+ state.tasks.push({id:uid(),title,desc:(val('mDesc')||'')+(c?'\n\nCaso asociado: '+c.name:''),project:val('mProject',c?.project||currentProjectId||state.projects[0]?.id||''),status:val('mStatus','pendiente'),priority:val('mPriority',c?.alert||'media'),owner:val('mOwner',c?.owner||'Fabián'),due:val('mDue'),type:'seguimiento'});
+ if(c){c.history=(c.history||'')+'\n- '+new Date().toLocaleDateString('es-CL')+': se creó una tarea de seguimiento.'}
+ save(); closeModal(); renderAll(); toast('Tarea derivada creada');
+}
+function closeCase(id){ensureStateShape();const c=state.cases.find(x=>x.id===id);if(!c)return;c.status=c.status==='cerrado'?'abierto':'cerrado';save();renderAll()}
+function deleteCase(id){ensureStateShape();state.cases=state.cases.filter(x=>x.id!==id);save();renderAll()}
+function saveUser(){
+ ensureStateShape();
+ const email=val('mEmail');
+ if(!email){toast('Agrega un correo');return}
+ state.users.push({id:uid(),name:val('mName','Usuario'),email,role:val('mRole','Solo lectura'),scope:val('mScope','Por definir')});
+ save(); closeModal(); renderAll(); toast('Usuario agregado');
+}
+function toggleTask(id){const t=state.tasks.find(x=>x.id===id);t.status=t.status==='terminada'?'pendiente':'terminada';save();renderAll()}
+function deleteTask(id){state.tasks=state.tasks.filter(x=>x.id!==id);save();renderAll()}
+function deleteProject(id){if(confirm('¿Eliminar proyecto? Las tareas asociadas quedarán sin proyecto.')){state.projects=state.projects.filter(x=>x.id!==id);if(currentProjectId===id)currentProjectId=null;save();renderAll();if(!currentProjectId){$('projectDetailView')?.classList.remove('on');$('projectListView')?.classList.remove('off')}}}
+function deleteMeeting(id){state.meetings=state.meetings.filter(x=>x.id!==id);save();renderAll()}
+function deleteNote(id){state.notes=state.notes.filter(x=>x.id!==id);save();renderAll()}
+function deleteUser(id){state.users=state.users.filter(x=>x.id!==id);save();renderAll()}
+function seedWeek(){toast('La semana se actualiza según las fechas límite registradas')}
+function generateReport(){
+ const pend=state.tasks.filter(t=>t.status!=='terminada'); const done=state.tasks.filter(t=>t.status==='terminada'); const blocked=state.tasks.filter(t=>t.status==='bloqueada'); const urgent=pend.filter(t=>t.priority==='alta');
+ const active=state.projects.filter(p=>p.status==='activo'); const openCases=(state.cases||[]).filter(c=>c.status!=='cerrado'); const highCases=openCases.filter(c=>c.alert==='alta'); const next=state.meetings.filter(m=>m.date>=isoAdd(0)).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,3);
+ $('reportOut').textContent=`REPORTE SEMANAL · MESA DE TRABAJO\n\n1. Estado general\n- Proyectos activos: ${active.length}\n- Tareas pendientes: ${pend.length}\n- Tareas cerradas: ${done.length}\n- Tareas bloqueadas: ${blocked.length}\n- Casos abiertos: ${openCases.length}\n- Casos con alerta alta: ${highCases.length}\n\n2. Prioridades abiertas\n${urgent.length?urgent.map(t=>`- ${t.title} (${projName(t.project)}, ${fmt(t.due)}, ${t.owner})`).join('\n'):'- No hay tareas de alta prioridad abiertas.'}\n\n3. Proyectos activos\n${active.map(p=>`- ${p.name}: ${p.progress}% · ${p.owner}`).join('\n')}\n\n4. Casos específicos\n${openCases.length?openCases.slice(0,5).map(c=>`- ${c.name}: alerta ${c.alert} · ${c.status} · próxima acción: ${c.next||'sin definir'}`).join('\n'):'- No hay casos abiertos registrados.'}\n\n5. Próximas reuniones\n${next.length?next.map(m=>`- ${fmt(m.date)} · ${m.title} · ${m.people}`).join('\n'):'- No hay reuniones próximas registradas.'}\n\n6. Bloqueos\n${blocked.length?blocked.map(t=>`- ${t.title}: ${t.desc}`).join('\n'):'- Sin bloqueos registrados.'}\n\n7. Próximos pasos sugeridos\n- Cerrar tareas de alta prioridad con fecha próxima.\n- Revisar proyectos con avance menor al 50%.\n- Transformar acuerdos de reuniones en tareas concretas.`;
+}
+function copyReport(){navigator.clipboard.writeText($('reportOut').textContent);toast('Reporte copiado')}
+function esc(s){return String(s||'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
+renderAll();
+</script>
+</body>
+</html>
